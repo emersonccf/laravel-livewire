@@ -3,12 +3,17 @@
 namespace App\Livewire;
 
 use App\Models\Tweet;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('Exibindo Tweets')]
+#[Title('Exibindo e Criando Tweets')]
 class ShowTweets extends Component
 {
-    public string $content =  'Apenas um teste 2';
+    public string $content =  'Meu tweet!!!';
+
+    protected $rules = [
+        'content' => 'required|min:3|max:255',
+    ];
 
     public function render()
     {
@@ -20,6 +25,9 @@ class ShowTweets extends Component
     }
 
     public function create(){
+
+        $this->validate();
+
         Tweet::create([
             'content' => $this->content,
             'user_id' => 1
