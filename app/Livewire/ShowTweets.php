@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Tweet;
+use App\Models\User;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
