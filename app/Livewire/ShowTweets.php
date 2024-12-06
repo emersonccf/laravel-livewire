@@ -11,7 +11,7 @@ class ShowTweets extends Component
     public string $message =  'Apenas um teste 2';
     public function render()
     {
-        $tweets = Tweet::get();
+        $tweets = Tweet::with('user')->get(); // consulta com relacionamento otimizada
 
         return view('livewire.show-tweets', [
             'tweets' => $tweets
