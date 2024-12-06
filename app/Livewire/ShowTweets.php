@@ -21,7 +21,7 @@ class ShowTweets extends Component
 
     public function render()
     {
-        $tweets = Tweet::with('user')->paginate(5); // consulta com relacionamento otimizada
+        $tweets = Tweet::with('user')->latest()->paginate(10); // consulta com relacionamento otimizada
 
         return view('livewire.show-tweets', [
             'tweets' => $tweets
@@ -30,12 +30,15 @@ class ShowTweets extends Component
 
     public function create(){
 
-        $this->validate();
+        //$this->validate();
 
-        Tweet::create([
+        /*Tweet::create([
             'content' => $this->content,
-            'user_id' => 1
-        ]);
+            'user_id' => auth()->id(),
+        ]);*/
+
+        // Já pega o usuário logado e passa para a criação do tweet e passa os dados válidos direto no método criador
+        auth()->user()->tweets()->create($this->validate());
 
         $this->content = '';
     }
