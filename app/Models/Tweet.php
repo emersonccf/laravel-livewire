@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Tweet extends Model
 {
     use HasFactory;
-    protected $fillable = ['content'];
+    protected $fillable = ['content', 'user_id'];
 
     public function user(): BelongsTo
     {

@@ -8,7 +8,8 @@ use Livewire\Component;
 #[Title('Exibindo Tweets')]
 class ShowTweets extends Component
 {
-    public string $message =  'Apenas um teste 2';
+    public string $content =  'Apenas um teste 2';
+
     public function render()
     {
         $tweets = Tweet::with('user')->get(); // consulta com relacionamento otimizada
@@ -16,5 +17,14 @@ class ShowTweets extends Component
         return view('livewire.show-tweets', [
             'tweets' => $tweets
         ]);
+    }
+
+    public function create(){
+        Tweet::create([
+            'content' => $this->content,
+            'user_id' => 1
+        ]);
+
+        $this->content = '';
     }
 }
