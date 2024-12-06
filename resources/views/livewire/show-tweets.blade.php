@@ -16,4 +16,9 @@
         </p>
     @endforeach
 
+    <hr>
+    <div>
+        {{  $tweets->links() }}
+    </div>
+
 </div>

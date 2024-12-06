@@ -5,10 +5,13 @@ namespace App\Livewire;
 use App\Models\Tweet;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Title('Exibindo e Criando Tweets')]
 class ShowTweets extends Component
 {
+    use WithPagination;
+
     public string $content =  'Meu tweet!!!';
 
     protected $rules = [
@@ -17,7 +20,7 @@ class ShowTweets extends Component
 
     public function render()
     {
-        $tweets = Tweet::with('user')->get(); // consulta com relacionamento otimizada
+        $tweets = Tweet::with('user')->paginate(5); // consulta com relacionamento otimizada
 
         return view('livewire.show-tweets', [
             'tweets' => $tweets
