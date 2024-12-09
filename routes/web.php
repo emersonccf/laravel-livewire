@@ -6,10 +6,11 @@ use App\Livewire\{
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('tweets', ShowTweets::class)->name('tweets.index')->middleware('auth');
+
 
 Route::middleware([
     'auth:sanctum',
