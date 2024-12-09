@@ -4,20 +4,22 @@ namespace App\Livewire;
 
 use App\Models\Tweet;
 use App\Models\User;
+use Livewire\Attributes\Rule;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-#[Title('Exibindo e Criando Tweets')]
+#[Title('Exibindo e Criando Tweets')] //definindo título de uma página que chama a classe
 class ShowTweets extends Component
 {
     use WithPagination;
 
+    #[Rule('required|min:3|max:255')] //nova forma de definir regras de uma propriedade
     public string $content =  'Meu tweet!!!';
 
-    protected $rules = [
+    /*protected $rules = [
         'content' => 'required|min:3|max:255',
-    ];
+    ];*/
 
     public function render()
     {

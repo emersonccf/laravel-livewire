@@ -1,24 +1,22 @@
 <div>
-    Show Tweets!!!
-    <p>{{  $content }}</p>
-    <form action="" method="post" wire:submit.prevent="create">
+        <h2>Show Tweets!!!</h2>
 
-        <input type="text" name="content" id="content" placeholder="Digite seu tweet..." wire:model="content">
-        @error('content') {{ $message }}  @enderror
+        <p>{{  $content }}</p>
 
-        <button type="submit">Criar Tweet</button>
-    </form>
+        <form action="" method="post" wire:submit.prevent="create">
 
-    <hr>
-    @foreach($tweets as $tweet)
-        <p>
-            USUÁRIO: {{ $tweet->user->name }} CONTEÚDO: {{ $tweet->content }}
-        </p>
-    @endforeach
+            <input type="text" name="content" id="content" placeholder="Digite seu tweet..." wire:model="content">
+            @error('content') {{ $message }}  @enderror
 
-    <hr>
-    <div>
-        {{  $tweets->links() }}
-    </div>
+            <button type="submit">Criar Tweet</button>
+        </form>
 
+        <hr>
+
+            @foreach($tweets as $tweet)
+                <p> USUÁRIO: {{ $tweet->user->name }} CONTEÚDO: {{ $tweet->content }} </p>
+            @endforeach
+
+        <hr>
+        <samp>{{  $tweets->links() }}</samp>
 </div>

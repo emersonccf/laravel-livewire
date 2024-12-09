@@ -13,35 +13,40 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-       {{-- <link rel="stylesheet" href="{{ assert('resources/css/app.css') }}"> --}}{{--  eu inclui  --}}{{--
-        <script type="text/javascript" src="{{ assert('resources/js/app.js') }}"></script> --}}{{--  eu inclui  --}}
 
         <!-- Styles -->
-        @livewireStyles
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased bg-gray-100">
         <x-banner />
 
-        <div class="min-h-screen bg-gray-100">
-            <!--@livewire('navigation-menu')-->
+        <div class="container mx-auto h-200">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <!-- Page Heading -->
-{{--            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                    <div class="min-h-screen bg-gray-100">
+                        @livewire('navigation-menu')
+
+                        <!-- Page Heading -->
+                        @if (isset($header))
+                            <header class="bg-white shadow">
+                                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                                    {{ $header }}
+                                </div>
+                            </header>
+                        @endif
+
+                        <!-- Page Content -->
+                        <main>
+                            {{ $slot }}
+                        </main>
                     </div>
-                </header>
-            @endif--}}
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            </div>
         </div>
+
 
         @stack('modals')
 
-        @livewireScripts
     </body>
 </html>
