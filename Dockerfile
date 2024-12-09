@@ -13,9 +13,9 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    iputils-ping \       # Para o comando ping
-    net-tools \          # Inclui ferramentas de rede como ifconfig
-    dnsutils             # Inclui o dig e nslookup
+    net-tools \
+    dnsutils \
+    iputils-ping
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
