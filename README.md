@@ -1,66 +1,107 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Configuração do ambiente para executar Laravel 11 com PHP 8.3 utilizando o Docker 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Atenção: garanta que o Docker esteja instalado e funcionando de forma adequada no seu sistema operacional. Verifique se o NodeJs também está instalado.
 
-## About Laravel
+### Siga os passos abaixo na sequencia em que são apresentados:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Clonar o repositório:
+```
+git clone https://github.com/emersonccf/laravel-livewire.git
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Entrar na pasta do repositório:
+```
+cd laravel-livewire
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Instala as dependências do NodeJS:
+```
+npm install && npm run build
+```
 
-## Learning Laravel
+Faça uma cópia do arquivo .env.example para .env e após a cópia faça os ajustes necessários nas variáveis de ambiente antes de criar e subir os containers pois as informações serão utilizadas neles. Faça os ajustes que julgar necessários: 
+```
+Windows: copy .env.example .env
+Linux: cp .env.example .env
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Baixa as imagens e cria os containers necessários, baseado nos arquivos docker-composer.yml e no Dockerfile, em segundo plano ( -d):
+```
+docker-compose up -d
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Exibe a relação dos containers que foram criados com informações importantes como nome do serviço, status, porta onde cada um está alocado:
+```
+docker-compose ps
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Acesse o container da aplicação:
+```
+docker-compose exec app bash
+```
 
-## Laravel Sponsors
+Após entrar no container, instale as dependências do PHP do projeto através do composer:
+```
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Gere uma nova APP_KEY para a aplicação:
+```
+php artisan key:generate
+```
 
-### Premium Partners
+Gere as tabelas no Banco de Dados definido no .env (DB_DATABASE=laravel_livewire) e popule as tabelas com as seeds. Nesse ponto se ocorre algum erro reveja as configurações do arquivo .env e refaça os containers com o comando `docker-compose down` e depois `docker-compose up -d`:
+```
+php artisan migrate:refresh --seed
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Ocorrendo tudo bem, já pode acessar o projeto pelo navegador:
+```
+http://localhost:8000
+```
 
-## Contributing
+Fazendo login no sistema: já existe um usuário criado para login:
+```
+Usuário: admin@admin.com
+Senha: 123
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Para acessar o phpMyAdmin use o caminho abaixo e para acessar use o usuário e a senha definidos no arquivo .env:
+```
+http://localhost:8080
+```
 
-## Code of Conduct
+xxxxx:
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
 
-## Security Vulnerabilities
+xxxxx:
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
 
-## License
+xxxxx:
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+
+xxxxx:
+```
+
+```
+
+Para e remove containers e redes, mantém os dados:
+```
+docker-compose down
+```
+
+[Opcional] Caso tenha necessidade também pode acessar o container do MySql (Banco de Dados):
+```
+docker-compose exec -it mysql bash
+```
+
+Credenciais para acesso ao MySql:
+```
+mysql -u root -p <senha>
+```
